@@ -14,9 +14,9 @@
         
         <quasi>
             <subtree xpath="/dataset/person/age">
-                <levelManager>range_generalization_10_years</levelManager>
+                <levelManager>AgeManager</levelManager>
             </subtree>
-            <subtree xpath="/dataset/person/gender">
+            <!-- <subtree xpath="/dataset/person/gender">
                 <levelManager>suppression</levelManager>
             </subtree>
             <subtree xpath="/dataset/person/occupation">
@@ -27,7 +27,8 @@
             </subtree>
             <subtree xpath="/dataset/person/maritalStatus">
                 <levelManager>suppression</levelManager>
-            </subtree>
+            </subtree> -->
+
             <!-- <subtree xpath="/dataset/person/address/location/city">
                 <levelManager>regional_generalization</levelManager>
             </subtree>

@@ -1,0 +1,55 @@
+<?xml version='1.0'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+targetNamespace="http://www.xpriv.com/rules"
+xmlns="http://www.xpriv.com/rules"
+elementFormDefault="qualified"
+>
+    <xs:complexType name="subtreeType">
+            <xs:attribute name="xpath" type="xs:String"/>
+    </xs:complexType>
+
+    <xs:complexType name="subtreeQuasiType">
+            <xs:attribute name="xpath" type="xs:String"/>
+            <xs:element name="levelManager" type="xs:String"/>
+    </xs:complexType>
+
+    <xs:complexType name="subtreeListType">
+        <xs:sequence>
+            <xs:element name="subtree" type="subtreeType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="subtreeListQuasiType">
+        <xs:sequence>
+            <xs:element name="subtree" type="subtreeQuasiType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="rules">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="attribute_mapping">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="anyComplexType">
+                                <xs:sequence>
+                                    <xs:element name="direct" type="subtreeListType" minOccurs="0" maxOccurs="unbounded">
+                                    </xs:element>
+                                    <xs:element name="quasi" type="subtreeListType" minOccurs="0" maxOccurs="unbounded">
+                                    </xs:element>
+                                    <xs:element name="sensitive" type="subtreeListType" minOccurs="0" maxOccurs="unbounded">
+                                    </xs:element>
+                                    <xs:element name="insensitive" type="subtreeListType" minOccurs="0" maxOccurs="unbounded">
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="entity_level" type="xs:String">
+
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs>

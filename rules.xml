@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns="http://www.xpriv.com/rules"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.xpriv.com/rules rules.xsd">
+    
+    <attribute_mapping>
+        <direct>
+            <subtree xpath="/dataset/person/aadharNumber"/>
+            <subtree xpath="/dataset/person/firstName"/>
+            <subtree xpath="/dataset/person/lastName"/>
+            <!-- <subtree xpath="/dataset/person/address/house/houseNumber"/> -->
+            <!-- <subtree xpath="/dataset/person/address/house/street"/> -->
+        </direct>
+        
+        <quasi>
+            <subtree xpath="/dataset/person/age">
+                <levelManager>range_generalization_10_years</levelManager>
+            </subtree>
+            <subtree xpath="/dataset/person/gender">
+                <levelManager>suppression</levelManager>
+            </subtree>
+            <subtree xpath="/dataset/person/occupation">
+                <levelManager>industry_generalization</levelManager>
+            </subtree>
+            <subtree xpath="/dataset/person/education">
+                <levelManager>degree_level_generalization</levelManager>
+            </subtree>
+            <subtree xpath="/dataset/person/maritalStatus">
+                <levelManager>suppression</levelManager>
+            </subtree>
+            <!-- <subtree xpath="/dataset/person/address/location/city">
+                <levelManager>regional_generalization</levelManager>
+            </subtree>
+            <subtree xpath="/dataset/person/address/location/state">
+                <levelManager>retention</levelManager>
+            </subtree>
+            <subtree xpath="/dataset/person/address/location/pincode">
+                <levelManager>mask_last_3_digits</levelManager> -->
+            <!-- </subtree> -->
+        </quasi>
+        
+        <sensitive>
+            <subtree xpath="/dataset/person/disease"/>
+            <subtree xpath="/dataset/person/incomeBracket"/>
+        </sensitive>
+        
+        <insensitive>
+            <subtree xpath="/dataset/person/bloodGroup"/>
+            <subtree xpath="/dataset/person/address/location/country"/>
+        </insensitive>
+    </attribute_mapping>
+    
+    <entity_level xpath="/dataset/*"></entity_level>
+    
+</rules>

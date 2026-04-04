@@ -1,6 +1,6 @@
 package custom.AgeHandler;
 
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 import interfaces.LevelManager;
 
 public class AgeManager0 implements LevelManager 
@@ -20,13 +20,22 @@ public class AgeManager0 implements LevelManager
         return ageManager0;
     }
 
-    public boolean isEqual(Node root1, Node root2)
+    public boolean isEqual(Element root1, Element root2)
     {
-        return true;
+        String age1 = root1.getTextContent();
+        String age2 = root2.getTextContent();
+
+        return age1.equals(age2);
     }  
     
-    public Node generalize(Node root)
+    public void generalize(Element root)
     {
-        return null;
+        int age = Integer.parseInt(root.getTextContent());
+
+        if (age <= 50)
+            root.setTextContent("0-50");
+
+        else    
+            root.setTextContent("51-100");
     }
 }

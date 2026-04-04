@@ -1,9 +1,9 @@
 package interfaces;
 
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 public interface LevelManager
 {
-    public boolean isEqual(Node root1, Node root2);
-    public Node generalize(Node root);
+    public boolean isEqual(Element root1, Element root2);
+    public void generalize(Element root);
 }

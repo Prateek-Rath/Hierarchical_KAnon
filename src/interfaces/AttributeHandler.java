@@ -1,6 +1,8 @@
 package interfaces;
 
-public interface AttributeHandler 
+public abstract class AttributeHandler 
 {
-    public LevelManager getLevelManager(int level);
+    public int maxLevel;
+    public abstract LevelManager getLevelManager(int level);
+
 }

@@ -14,29 +14,29 @@
         
         <quasi>
             <subtree xpath="/dataset/person/age">
-                <levelManager>AgeManager</levelManager>
+                <AttributeHandler>custom.AgeHandler.AgeHandler</AttributeHandler>
             </subtree>
             <!-- <subtree xpath="/dataset/person/gender">
-                <levelManager>suppression</levelManager>
+                <AttributeHandler>suppression</AttributeHandler>
             </subtree>
             <subtree xpath="/dataset/person/occupation">
-                <levelManager>industry_generalization</levelManager>
+                <AttributeHandler>industry_generalization</AttributeHandler>
             </subtree>
             <subtree xpath="/dataset/person/education">
-                <levelManager>degree_level_generalization</levelManager>
+                <AttributeHandler>degree_level_generalization</AttributeHandler>
             </subtree>
             <subtree xpath="/dataset/person/maritalStatus">
-                <levelManager>suppression</levelManager>
+                <AttributeHandler>suppression</AttributeHandler>
             </subtree> -->
 
             <!-- <subtree xpath="/dataset/person/address/location/city">
-                <levelManager>regional_generalization</levelManager>
+                <AttributeHandler>regional_generalization</AttributeHandler>
             </subtree>
             <subtree xpath="/dataset/person/address/location/state">
-                <levelManager>retention</levelManager>
+                <AttributeHandler>retention</AttributeHandler>
             </subtree>
             <subtree xpath="/dataset/person/address/location/pincode">
-                <levelManager>mask_last_3_digits</levelManager> -->
+                <AttributeHandler>mask_last_3_digits</AttributeHandler> -->
             <!-- </subtree> -->
         </quasi>
         

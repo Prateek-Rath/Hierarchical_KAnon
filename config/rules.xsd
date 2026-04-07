@@ -10,7 +10,7 @@
 
     <xs:complexType name="subtreeQuasiType">
         <xs:sequence>
-            <xs:element name="levelManager" type="xs:string"/>
+            <xs:element name="AttributeManager" type="xs:string"/>
         </xs:sequence>
         <xs:attribute name="xpath" type="xs:string" use="required"/>
     </xs:complexType>

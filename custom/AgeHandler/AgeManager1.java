@@ -22,18 +22,25 @@ public class AgeManager1 implements LevelManager
 
     public boolean isEqual(Element root1, Element root2)
     {
-        String age1 = root1.getTextContent();
-        String age2 = root2.getTextContent();
+        String bin1 = root1.getTextContent();
+        String bin2 = root2.getTextContent();
 
-        return age1.equals(age2);
+        return bin1.equals(bin2);
     }  
     
     public void generalize(Element root)
     {
-        int age = Integer.parseInt(root.getTextContent());
-        int lower = (age / 10) * 10;
-        int higher = (age / 10 + 1) * 10 - 1;
+        String content = root.getTextContent();
+        String[] splitted = content.split("-");
+        int higher = Integer.parseInt(splitted[1]);
 
-        root.setTextContent(lower + "-" + higher);
+        if (higher <= 19)
+            root.setTextContent("Young");
+
+        else if (higher <= 59)
+            root.setTextContent("Adult");
+
+        else
+            root.setTextContent("Senior");
     }
 }

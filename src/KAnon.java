@@ -12,12 +12,19 @@ import java.util.Queue;
 
 import interfaces.AttributeHandler;
 
-public class KAnon {
-
+public class KAnon 
+{
     // Map XPath -> AttributeHandler
-    private Map<String, AttributeHandler> handlerMap = new HashMap<>();
-    private Map<String, Integer> currentGenLevel = new HashMap<>(); 
-    private Queue<Map<String, Integer>> q = new ArrayDeque<Map<String,Integer>>();
+    private Map<String, AttributeHandler> handlerMap;
+    private Map<String, Integer> currentGenLevel; 
+    private Queue<Map<String, Integer>> q;
+
+    public KAnon()
+    {
+        this.handlerMap = new HashMap<>();
+        this.currentGenLevel = new HashMap<>();
+        this.q = new ArrayDeque<Map<String, Integer>>();
+    }
 
     public void load(String ruleFilePath) {        
         try {
@@ -60,7 +67,6 @@ public class KAnon {
                         Class<?> clazz = Class.forName(className);
                         Object instance = clazz.getDeclaredConstructor().newInstance();
 
-                        // ✅ Use AttributeHandler instead of LevelManager
                         if (instance instanceof AttributeHandler) {
 
                             AttributeHandler handler = (AttributeHandler) instance;
@@ -90,14 +96,12 @@ public class KAnon {
     }
 
     public void traverse(){
+
+        load("./config/rules.xml");
+
         q.add(currentGenLevel);
         while(!q.isEmpty()){
             Map<String, Integer> curr = q.poll();
-
-            // if(my_check(curr)){
-            //     //found the gen level
-            //     break;
-            // }
 
             if(check_Kanon(curr)){
                 System.out.printf("Found it\n");
@@ -117,7 +121,8 @@ public class KAnon {
     }
 
 
-    public boolean check_Kanon(Map<String, Integer> curr){
+    public boolean check_Kanon(Map<String, Integer> curr)
+    {
         return true;
     }
 }

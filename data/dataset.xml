@@ -4,7 +4,7 @@
         <firstName>Rahul</firstName>
         <lastName>Sharma</lastName>
         <gender>Male</gender>
-        <age>34</age>
+        <age>25</age>
 
         <occupation>Software Engineer</occupation>
         <education>Bachelor</education>
@@ -33,7 +33,7 @@
         <firstName>Anita</firstName>
         <lastName>Iyer</lastName>
         <gender>Female</gender>
-        <age>29</age>
+        <age>25</age>
 
         <occupation>Teacher</occupation>
         <education>Master</education>
@@ -62,7 +62,7 @@
         <firstName>Arjun</firstName>
         <lastName>Reddy</lastName>
         <gender>Male</gender>
-        <age>41</age>
+        <age>25</age>
 
         <occupation>Business</occupation>
         <education>High School</education>
@@ -91,7 +91,7 @@
         <firstName>Priya</firstName>
         <lastName>Kapoor</lastName>
         <gender>Female</gender>
-        <age>36</age>
+        <age>25</age>
 
         <occupation>Doctor</occupation>
         <education>PhD</education>
@@ -120,7 +120,7 @@
         <firstName>Vikram</firstName>
         <lastName>Singh</lastName>
         <gender>Male</gender>
-        <age>52</age>
+        <age>35</age>
 
         <occupation>Government Employee</occupation>
         <education>Bachelor</education>

@@ -5,11 +5,6 @@ import interfaces.LevelManager;
 
 public class AgeHandler extends AttributeHandler 
 {
-    public AgeHandler()
-    {
-        this.maxLevel = 2;
-    }
-
     public LevelManager getLevelManager(int level)
     {
         try

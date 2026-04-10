@@ -4,13 +4,20 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+
 import java.io.File;
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
+import java.util.List;
+import java.util.ArrayList;
 
 import interfaces.AttributeHandler;
+import interfaces.LevelManager;
 
 public class KAnon 
 {
@@ -18,15 +25,52 @@ public class KAnon
     private Map<String, AttributeHandler> handlerMap;
     private Map<String, Integer> currentGenLevel; 
     private Queue<Map<String, Integer>> q;
+    private List<Element> dataset;
+    private int kAnonymity;
 
     public KAnon()
     {
         this.handlerMap = new HashMap<>();
         this.currentGenLevel = new HashMap<>();
+        this.dataset = new ArrayList<>();
         this.q = new ArrayDeque<Map<String, Integer>>();
     }
 
-    public void load(String ruleFilePath) {        
+    public void loadDataset(String dataFilePath, String entityXPath) {
+        try {
+            File xmlFile = new File(dataFilePath);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            
+            // Match the namespace settings of your rules
+            dbFactory.setNamespaceAware(true); 
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(xmlFile);
+            doc.getDocumentElement().normalize();
+
+            XPath xpathProcessor = XPathFactory.newInstance().newXPath();
+            
+            // Get all records (e.g., all <person> elements)
+            NodeList nodes = (NodeList) xpathProcessor.evaluate(
+                entityXPath, 
+                doc, 
+                XPathConstants.NODESET
+            );
+
+            for (int i = 0; i < nodes.getLength(); i++) {
+                if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                    dataset.add((Element) nodes.item(i));
+                }
+            }
+
+            System.out.println("Dataset loaded successfully. Total records: " + dataset.size());
+
+        } catch (Exception e) {
+            System.err.println("Error loading dataset: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void load(String ruleFilePath, String datasetFilePath) {        
         try {
             File xmlFile = new File(ruleFilePath);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -34,6 +78,27 @@ public class KAnon
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
+
+            NodeList kList = doc.getElementsByTagNameNS(
+                "http://www.xpriv.com/rules", "k_anonymity"
+            );
+
+            if (kList.getLength() > 0) 
+            {
+                Element kElement = (Element) kList.item(0);
+                String kValueStr = kElement.getTextContent().trim();
+
+                int kValue = Integer.parseInt(kValueStr);
+
+                System.out.println("k-anonymity value: " + kValue);
+
+                this.kAnonymity = kValue;
+            } 
+            
+            else 
+            {
+                System.err.println("No <k_anonymity> tag found");
+            }
 
             NodeList quasiList = doc.getElementsByTagNameNS(
                 "http://www.xpriv.com/rules", "quasi"
@@ -88,6 +153,16 @@ public class KAnon
                 }
             }
 
+            NodeList entityList = doc.getElementsByTagNameNS("http://www.xpriv.com/rules", "entity_level");
+            
+            if (entityList.getLength() > 0) {
+                Element entityElement = (Element) entityList.item(0);
+                String entityXPath = entityElement.getAttribute("xpath");
+                
+                // Now call the loader (assuming your data file is named data.xml)
+                loadDataset(datasetFilePath, entityXPath);
+            }
+
             System.out.println("\nTotal handlers loaded: " + handlerMap.size());
 
         } catch (Exception e) {
@@ -95,24 +170,24 @@ public class KAnon
         }
     }
 
-    public void traverse(){
-
-        load("./config/rules.xml");
-
+    public void traverse()
+    {  
         q.add(currentGenLevel);
         while(!q.isEmpty()){
             Map<String, Integer> curr = q.poll();
 
             if(check_Kanon(curr)){
                 System.out.printf("Found it\n");
+                System.out.println(curr.get("/dataset/person/age"));
                 break;
             }
 
             for(Map.Entry<String, Integer> attr_lvl : curr.entrySet()){
                 Map<String, Integer> nextel = new HashMap<>(curr);
                 //if(attr_lvl.getValue() < maxLevel)
-                AttributeHandler handler = handlerMap.get(attr_lvl.getKey());
-                if(attr_lvl.getValue() < handler.maxLevel){
+                // AttributeHandler handler = handlerMap.get(attr_lvl.getKey()); not required as of now
+                
+                if(attr_lvl.getValue() < this.kAnonymity){
                     nextel.put(attr_lvl.getKey(), attr_lvl.getValue() + 1);
                     q.add(nextel);
                 }
@@ -121,8 +196,101 @@ public class KAnon
     }
 
 
-    public boolean check_Kanon(Map<String, Integer> curr)
+    // public boolean check_Kanon(Map<String, Integer> curr)
+    // {
+    //     return true;
+    // }
+
+    public boolean check_Kanon(Map<String, Integer> curr) 
     {
+        System.out.println("check_Kanon called.");
+
+        // List to hold our groups (Equivalence Classes)
+        // Each inner list contains records that are indistinguishable
+        java.util.List<java.util.List<Element>> equivalenceClasses = new java.util.ArrayList<>();
+
+        for (Element record : dataset) {
+            boolean foundGroup = false;
+
+            for (java.util.List<Element> group : equivalenceClasses) {
+                // Compare the current record with the first member of an existing group
+                Element representative = group.get(0);
+                
+                if (isRecordEquivalent(record, representative, curr)) {
+                    group.add(record);
+                    foundGroup = true;
+                    break;
+                }
+            }
+
+            // If no matching group is found, create a new equivalence class
+            if (!foundGroup) {
+                java.util.List<Element> newGroup = new java.util.ArrayList<>();
+                newGroup.add(record);
+                equivalenceClasses.add(newGroup);
+            }
+        }
+
+        // Check if every equivalence class meets the k-threshold
+        for (java.util.List<Element> group : equivalenceClasses) {
+
+            System.out.println("Group size = " + group.size());
+
+            if (group.size() < kAnonymity) {
+                return false; // Privacy violation: a group is smaller than k
+            }
+        }
+
+        return true; // Success: All groups are at least size k
+    }
+
+    /**
+     * Helper to check if two records are equivalent across all quasi-identifiers
+     * based on the current generalization levels.
+     */
+    private boolean isRecordEquivalent(Element r1, Element r2, Map<String, Integer> levels) {
+        for (Map.Entry<String, Integer> entry : levels.entrySet()) {
+            String xpath = entry.getKey();
+            int level = entry.getValue();
+
+            System.out.println("level = " + level);
+
+            AttributeHandler handler = handlerMap.get(xpath);
+            LevelManager manager = handler.getLevelManager(level);
+
+            // We assume your XML structure allows finding the specific node via XPath
+            // For this example, we use a simplified node lookup
+            Element node1 = findNodeByXPath(r1, xpath);
+            Element node2 = findNodeByXPath(r2, xpath);
+
+            if (!manager.isEqual(node1, node2)) {
+                return false; // If even one attribute differs, they aren't equivalent
+            }
+        }
         return true;
+    }
+
+    /**
+     * Helper to find a specific sub-element within a record based on an XPath.
+     * This evaluates the XPath relative to the provided record element.
+     */
+    private Element findNodeByXPath(Element record, String xpathExpression) {
+        try {
+            XPath xpathProcessor = XPathFactory.newInstance().newXPath();
+            
+            // Evaluate the expression relative to the 'record' node
+            Node result = (Node) xpathProcessor.evaluate(
+                xpathExpression, 
+                record, 
+                XPathConstants.NODE
+            );
+
+            if (result != null && result.getNodeType() == Node.ELEMENT_NODE) {
+                return (Element) result;
+            }
+        } catch (Exception e) {
+            System.err.println("Error evaluating XPath '" + xpathExpression + "': " + e.getMessage());
+        }
+        return null;
     }
 }

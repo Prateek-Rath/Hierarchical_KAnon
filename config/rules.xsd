@@ -10,7 +10,7 @@
 
     <xs:complexType name="subtreeQuasiType">
         <xs:sequence>
-            <xs:element name="AttributeManager" type="xs:string"/>
+            <xs:element name="AttributeHandler" type="xs:string"/>
         </xs:sequence>
         <xs:attribute name="xpath" type="xs:string" use="required"/>
     </xs:complexType>
@@ -30,6 +30,14 @@
     <xs:element name="rules">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="k_anonymity">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="2" />
+                            <xs:maxInclusive value="15" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
                 <xs:element name="attribute_mapping">
                     <xs:complexType>
                         <xs:sequence>

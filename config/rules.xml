@@ -2,6 +2,8 @@
 <rules xmlns="http://www.xpriv.com/rules"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.xpriv.com/rules rules.xsd">
+
+    <k_anonymity>2</k_anonymity>
     
     <attribute_mapping>
         <direct>
@@ -13,7 +15,7 @@
         </direct>
         
         <quasi>
-            <subtree xpath="/dataset/person/age">
+            <subtree xpath="./age">
                 <AttributeHandler>custom.AgeHandler.AgeHandler</AttributeHandler>
             </subtree>
             <!-- <subtree xpath="/dataset/person/gender">

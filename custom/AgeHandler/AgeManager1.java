@@ -22,10 +22,10 @@ public class AgeManager1 implements LevelManager
 
     public boolean isEqual(Element root1, Element root2)
     {
-        String age1 = root1.getTextContent();
-        String age2 = root2.getTextContent();
+        String range1 = root1.getTextContent();
+        String range2 = root2.getTextContent();
 
-        return age1.equals(age2);
+        return range1.equals(range2);
     }  
     
     public void generalize(Element root)

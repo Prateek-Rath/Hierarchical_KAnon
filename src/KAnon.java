@@ -173,12 +173,13 @@ public class KAnon
     public void traverse()
     {  
         q.add(currentGenLevel);
+        int x = 0;
         while(!q.isEmpty()){
             Map<String, Integer> curr = q.poll();
 
             if(check_Kanon(curr)){
                 System.out.printf("Found it\n");
-                System.out.println(curr.get("/dataset/person/age"));
+                System.out.println("x = " + x);
                 break;
             }
 
@@ -188,22 +189,18 @@ public class KAnon
                 // AttributeHandler handler = handlerMap.get(attr_lvl.getKey()); not required as of now
                 
                 if(attr_lvl.getValue() < this.kAnonymity){
+                    System.out.println(attr_lvl.getKey());
                     nextel.put(attr_lvl.getKey(), attr_lvl.getValue() + 1);
                     q.add(nextel);
                 }
             }
+            ++x;
         }
     }
 
-
-    // public boolean check_Kanon(Map<String, Integer> curr)
-    // {
-    //     return true;
-    // }
-
     public boolean check_Kanon(Map<String, Integer> curr) 
     {
-        System.out.println("check_Kanon called.");
+        // System.out.println("check_Kanon called.");
 
         // List to hold our groups (Equivalence Classes)
         // Each inner list contains records that are indistinguishable
@@ -234,7 +231,7 @@ public class KAnon
         // Check if every equivalence class meets the k-threshold
         for (java.util.List<Element> group : equivalenceClasses) {
 
-            System.out.println("Group size = " + group.size());
+            // System.out.println("Group size = " + group.size());
 
             if (group.size() < kAnonymity) {
                 return false; // Privacy violation: a group is smaller than k
@@ -253,8 +250,6 @@ public class KAnon
             String xpath = entry.getKey();
             int level = entry.getValue();
 
-            System.out.println("level = " + level);
-
             AttributeHandler handler = handlerMap.get(xpath);
             LevelManager manager = handler.getLevelManager(level);
 
@@ -263,7 +258,10 @@ public class KAnon
             Element node1 = findNodeByXPath(r1, xpath);
             Element node2 = findNodeByXPath(r2, xpath);
 
-            if (!manager.isEqual(node1, node2)) {
+            Element generalizedNode1 = handler.getGeneralized(node1, level);
+            Element generalizedNode2 = handler.getGeneralized(node2, level);
+
+            if (!manager.isEqual(generalizedNode1, generalizedNode2)) {
                 return false; // If even one attribute differs, they aren't equivalent
             }
         }

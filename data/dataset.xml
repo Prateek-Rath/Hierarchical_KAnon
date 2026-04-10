@@ -143,4 +143,33 @@
             </location>
         </address>
     </person>
+
+    <person id="P006">
+        <aadharNumber>7878-9377-8899</aadharNumber>
+        <firstName>Pratap</firstName>
+        <lastName>Rathod</lastName>
+        <gender>Male</gender>
+        <age>36</age>
+
+        <occupation>Engineer</occupation>
+        <education>Bachelor</education>
+        <maritalStatus>Widowed</maritalStatus>
+        <incomeBracket>6-10 LPA</incomeBracket>
+
+        <disease>Arthritis</disease>
+        <bloodGroup>O-</bloodGroup>
+
+        <address>
+            <house>
+                <houseNumber>90E</houseNumber>
+                <street>Park Street</street>
+            </house>
+            <location>
+                <city>Kolkata</city>
+                <state>West Bengal</state>
+                <country>India</country>
+                <pincode>700016</pincode>
+            </location>
+        </address>
+    </person>
 </dataset>

@@ -19,13 +19,21 @@ import java.util.ArrayList;
 import interfaces.AttributeHandler;
 import interfaces.LevelManager;
 
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 public class KAnon 
 {
     // Map XPath -> AttributeHandler
     private Map<String, AttributeHandler> handlerMap;
+    // represents the current gen lvl as (xpath1 -> genlvl1, xpath2 -> genlvl2, ...)
     private Map<String, Integer> currentGenLevel; 
+    // helps to travel the generalization lattice level-wise using BFS
     private Queue<Map<String, Integer>> q;
+    // The dataset loaded from the XML file, represented as a list of records (Elements)
     private List<Element> dataset;
+    // k value
     private int kAnonymity;
 
     public KAnon()
@@ -79,6 +87,7 @@ public class KAnon
             Document doc = dBuilder.parse(xmlFile);
             doc.getDocumentElement().normalize();
 
+            /* Extract the value of k in k-anonymity */
             NodeList kList = doc.getElementsByTagNameNS(
                 "http://www.xpriv.com/rules", "k_anonymity"
             );
@@ -98,8 +107,10 @@ public class KAnon
             else 
             {
                 System.err.println("No <k_anonymity> tag found");
+                System.exit(1);
             }
-
+            
+            /* Get all quasi attributes(nodes here) and load their handlers */ 
             NodeList quasiList = doc.getElementsByTagNameNS(
                 "http://www.xpriv.com/rules", "quasi"
             );
@@ -152,7 +163,8 @@ public class KAnon
                     
                 }
             }
-
+            
+            /* Get the entity level i.e. the level at which k-anon is required */
             NodeList entityList = doc.getElementsByTagNameNS("http://www.xpriv.com/rules", "entity_level");
             
             if (entityList.getLength() > 0) {
@@ -178,8 +190,7 @@ public class KAnon
             Map<String, Integer> curr = q.poll();
 
             if(check_Kanon(curr)){
-                System.out.printf("Found it\n");
-                System.out.println("x = " + x);
+                writeAnonymizedDataset("./data/output.xml", curr);
                 break;
             }
 
@@ -204,7 +215,7 @@ public class KAnon
 
         // List to hold our groups (Equivalence Classes)
         // Each inner list contains records that are indistinguishable
-        java.util.List<java.util.List<Element>> equivalenceClasses = new java.util.ArrayList<>();
+        List<List<Element>> equivalenceClasses = new ArrayList<>();
 
         for (Element record : dataset) {
             boolean foundGroup = false;
@@ -291,4 +302,64 @@ public class KAnon
         }
         return null;
     }
+
+    /* anonymize the dataset as per the current levels and write it to outputPath */
+    public void writeAnonymizedDataset(String outputPath, Map<String, Integer> levels) {
+    try {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+
+        // Create a new empty document
+        Document newDoc = builder.newDocument();
+
+        // Root element
+        Element root = newDoc.createElement("dataset");
+        newDoc.appendChild(root);
+
+        for (Element record : dataset) {
+            // Deep copy original record into new document
+            Node importedRecord = newDoc.importNode(record, true);
+            Element newRecord = (Element) importedRecord;
+
+            // Apply generalization for each quasi-identifier
+            for (Map.Entry<String, Integer> entry : levels.entrySet()) {
+                String xpath = entry.getKey();
+                int level = entry.getValue();
+
+                AttributeHandler handler = handlerMap.get(xpath);
+
+                Element node = findNodeByXPath(newRecord, xpath);
+                if (node == null) continue;
+
+                Element generalizedNode = handler.getGeneralized(node, level);
+
+                // Replace node content (simple approach)
+                if (generalizedNode != null) {
+                    node.setTextContent(generalizedNode.getTextContent());
+                }
+            }
+
+            root.appendChild(newRecord);
+        }
+
+        // Write to file
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+
+        DOMSource source = new DOMSource(newDoc);
+        StreamResult result = new StreamResult(new File(outputPath));
+
+        transformer.transform(source, result);
+
+        System.out.println("Anonymized dataset written to: " + outputPath);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
 }

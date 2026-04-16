@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset>
+  <person id="P001">
+            
+    <aadharNumber>1234-5678-9012</aadharNumber>
+            
+    <firstName>Rahul</firstName>
+            
+    <lastName>Sharma</lastName>
+            
+    <gender>Male</gender>
+            
+    <age>20-29</age>
+            
+    <occupation>Software Engineer</occupation>
+            
+    <education>Bachelor</education>
+            
+    <maritalStatus>Married</maritalStatus>
+            
+    <incomeBracket>8-12 LPA</incomeBracket>
+            
+    <disease>Diabetes</disease>
+            
+    <bloodGroup>O+</bloodGroup>
+            
+    <address>
+                  
+      <house>
+                        
+        <houseNumber>12A</houseNumber>
+                        
+        <street>MG Road</street>
+                    
+      </house>
+                  
+      <location>
+                        
+        <city>Bangalore</city>
+                        
+        <state>Karnataka</state>
+                        
+        <country>India</country>
+                        
+        <pincode>560001</pincode>
+                    
+      </location>
+              
+    </address>
+        
+  </person>
+  <person id="P002">
+            
+    <aadharNumber>2234-9876-1122</aadharNumber>
+            
+    <firstName>Anita</firstName>
+            
+    <lastName>Iyer</lastName>
+            
+    <gender>Female</gender>
+            
+    <age>20-29</age>
+            
+    <occupation>Teacher</occupation>
+            
+    <education>Master</education>
+            
+    <maritalStatus>Single</maritalStatus>
+            
+    <incomeBracket>4-6 LPA</incomeBracket>
+            
+    <disease>Hypertension</disease>
+            
+    <bloodGroup>A+</bloodGroup>
+            
+    <address>
+                  
+      <house>
+                        
+        <houseNumber>45B</houseNumber>
+                        
+        <street>Brigade Road</street>
+                    
+      </house>
+                  
+      <location>
+                        
+        <city>Bangalore</city>
+                        
+        <state>Karnataka</state>
+                        
+        <country>India</country>
+                        
+        <pincode>560025</pincode>
+                    
+      </location>
+              
+    </address>
+        
+  </person>
+  <person id="P003">
+            
+    <aadharNumber>9988-7766-5544</aadharNumber>
+            
+    <firstName>Arjun</firstName>
+            
+    <lastName>Reddy</lastName>
+            
+    <gender>Male</gender>
+            
+    <age>20-29</age>
+            
+    <occupation>Business</occupation>
+            
+    <education>High School</education>
+            
+    <maritalStatus>Married</maritalStatus>
+            
+    <incomeBracket>12-18 LPA</incomeBracket>
+            
+    <disease>Heart Disease</disease>
+            
+    <bloodGroup>B+</bloodGroup>
+            
+    <address>
+                  
+      <house>
+                        
+        <houseNumber>78C</houseNumber>
+                        
+        <street>Jubilee Hills</street>
+                    
+      </house>
+                  
+      <location>
+                        
+        <city>Hyderabad</city>
+                        
+        <state>Telangana</state>
+                        
+        <country>India</country>
+                        
+        <pincode>500033</pincode>
+                    
+      </location>
+              
+    </address>
+        
+  </person>
+  <person id="P004">
+            
+    <aadharNumber>7766-5544-3322</aadharNumber>
+            
+    <firstName>Priya</firstName>
+            
+    <lastName>Kapoor</lastName>
+            
+    <gender>Female</gender>
+            
+    <age>20-29</age>
+            
+    <occupation>Doctor</occupation>
+            
+    <education>PhD</education>
+            
+    <maritalStatus>Married</maritalStatus>
+            
+    <incomeBracket>20+ LPA</incomeBracket>
+            
+    <disease>Cancer</disease>
+            
+    <bloodGroup>AB+</bloodGroup>
+            
+    <address>
+                  
+      <house>
+                        
+        <houseNumber>22D</houseNumber>
+                        
+        <street>Connaught Place</street>
+                    
+      </house>
+                  
+      <location>
+                        
+        <city>Delhi</city>
+                        
+        <state>Delhi</state>
+                        
+        <country>India</country>
+                        
+        <pincode>110001</pincode>
+                    
+      </location>
+              
+    </address>
+        
+  </person>
+  <person id="P005">
+            
+    <aadharNumber>4455-6677-8899</aadharNumber>
+            
+    <firstName>Vikram</firstName>
+            
+    <lastName>Singh</lastName>
+            
+    <gender>Male</gender>
+            
+    <age>30-39</age>
+            
+    <occupation>Government Employee</occupation>
+            
+    <education>Bachelor</education>
+            
+    <maritalStatus>Widowed</maritalStatus>
+            
+    <incomeBracket>6-10 LPA</incomeBracket>
+            
+    <disease>Arthritis</disease>
+            
+    <bloodGroup>O-</bloodGroup>
+            
+    <address>
+                  
+      <house>
+                        
+        <houseNumber>90E</houseNumber>
+                        
+        <street>Park Street</street>
+                    
+      </house>
+                  
+      <location>
+                        
+        <city>Kolkata</city>
+                        
+        <state>West Bengal</state>
+                        
+        <country>India</country>
+                        
+        <pincode>700016</pincode>
+                    
+      </location>
+              
+    </address>
+        
+  </person>
+  <person id="P006">
+            
+    <aadharNumber>7878-9377-8899</aadharNumber>
+            
+    <firstName>Pratap</firstName>
+            
+    <lastName>Rathod</lastName>
+            
+    <gender>Male</gender>
+            
+    <age>30-39</age>
+            
+    <occupation>Engineer</occupation>
+            
+    <education>Bachelor</education>
+            
+    <maritalStatus>Widowed</maritalStatus>
+            
+    <incomeBracket>6-10 LPA</incomeBracket>
+            
+    <disease>Arthritis</disease>
+            
+    <bloodGroup>O-</bloodGroup>
+            
+    <address>
+                  
+      <house>
+                        
+        <houseNumber>90E</houseNumber>
+                        
+        <street>Park Street</street>
+                    
+      </house>
+                  
+      <location>
+                        
+        <city>Kolkata</city>
+                        
+        <state>West Bengal</state>
+                        
+        <country>India</country>
+                        
+        <pincode>700016</pincode>
+                    
+      </location>
+              
+    </address>
+        
+  </person>
+</dataset>

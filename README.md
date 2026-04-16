@@ -6,7 +6,7 @@ An attempt to implement k-anonymity on hierarchical data.
 In the root folder, run the command:
 
 ```bash
-javac -d . -sourcepath src:. $(find src custom -name "*.java") src/PrivacyEngine.java
+javac -d . -sourcepath src:. $(find src custom -name "*.java") src/Main.java
 ```
 
 # Running the Code
@@ -14,5 +14,5 @@ javac -d . -sourcepath src:. $(find src custom -name "*.java") src/PrivacyEngine
 In the root folder, run the command:
 
 ```bash
-java PrivacyEngine
+java Main
 ```

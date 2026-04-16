@@ -1,0 +1,111 @@
+<privacyPolicy xmlns="http://yourcompany.com/privacy-rules">
+
+    <!-- 🔴 Highest priority: completely block identity info -->
+    <rule id="R1" priority="100">
+        <path>/dataset/*/aadharNumber</path>
+        <action type="refuse"/>
+        <appliesTo>
+            <role>INTERN</role>
+            <role>MANAGER</role>
+        </appliesTo>
+    </rule>
+
+    <!-- 🔴 Block full identity (names) -->
+    <rule id="R2" priority="90">
+        <path>/dataset/*/firstName</path>
+        <action type="mask"/>
+        <appliesTo>
+            <role>INTERN</role>
+            <role>MANAGER</role>
+        </appliesTo>
+    </rule>
+
+    <rule id="R3" priority="90">
+        <path>/dataset/*/lastName</path>
+        <action type="mask"/>
+        <appliesTo>
+            <role>INTERN</role>
+            <role>MANAGER</role>
+        </appliesTo>
+    </rule>
+
+    <!-- 🟠 Sensitive health data -->
+    <rule id="R4" priority="95">
+        <path>/dataset/*/disease</path>
+        <action type="refuse"/>
+        <appliesTo>
+            <role>INTERN</role>
+        </appliesTo>
+    </rule>
+
+    <rule id="R5" priority="80">
+        <path>/dataset/*/disease</path>
+        <action type="mask"/>
+        <appliesTo>
+            <role>MANAGER</role>
+        </appliesTo>
+    </rule>
+
+    <!-- 🟡 Quasi-identifiers -->
+    <rule id="R6" priority="70">
+        <path>/dataset/*/age</path>
+        <action type="mask"/>
+        <appliesTo>
+            <role>INTERN</role>
+        </appliesTo>
+    </rule>
+
+    <rule id="R7" priority="70">
+        <path>/dataset/*/incomeBracket</path>
+        <action type="mask"/>
+        <appliesTo>
+            <role>INTERN</role>
+        </appliesTo>
+    </rule>
+
+    <!-- 🟡 Address generalization -->
+    <rule id="R8" priority="85">
+        <path>/dataset/*/address/house</path>
+        <action type="refuse"/>
+        <appliesTo>
+            <role>INTERN</role>
+            <role>MANAGER</role>
+        </appliesTo>
+    </rule>
+
+    <rule id="R9" priority="75">
+        <path>/dataset/*/address/location/pincode</path>
+        <action type="mask"/>
+        <appliesTo>
+            <role>INTERN</role>
+            <role>MANAGER</role>
+        </appliesTo>
+    </rule>
+
+    <!-- 🟢 Moderate sensitivity -->
+    <rule id="R10" priority="60">
+        <path>/dataset/*/maritalStatus</path>
+        <action type="mask"/>
+        <appliesTo>
+            <role>INTERN</role>
+        </appliesTo>
+    </rule>
+
+    <rule id="R11" priority="60">
+        <path>/dataset/*/education</path>
+        <action type="mask"/>
+        <appliesTo>
+            <role>INTERN</role>
+        </appliesTo>
+    </rule>
+
+    <!-- 🟢 Low sensitivity (allowed for managers) -->
+    <rule id="R12" priority="50">
+        <path>/dataset/*/occupation</path>
+        <action type="mask"/>
+        <appliesTo>
+            <role>INTERN</role>
+        </appliesTo>
+    </rule>
+
+</privacyPolicy>

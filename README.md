@@ -6,7 +6,8 @@ An attempt to implement k-anonymity on hierarchical data.
 In the root folder, run the command:
 
 ```bash
-javac -d . -sourcepath src:. $(find src custom -name "*.java") src/Main.java
+javac -d ./bin -sourcepath src:. $(find src custom -name "*.java") src/Anonymize_dataset.java
+javac -d ./bin -sourcepath src:. $(find src custom -name "*.java") src/RunQuery.java
 ```
 
 # Running the Code
@@ -14,5 +15,13 @@ javac -d . -sourcepath src:. $(find src custom -name "*.java") src/Main.java
 In the root folder, run the command:
 
 ```bash
-java Main
+java -cp ".:bin" Anonymize_dataset # run the k-anon thing, if you want to ditch it, don't run this.
+java -cp ".:bin" RunQuery \
+--dataFile="./data/kanon_output.xml" \
+--ruleFile="./config/access_rules.xml" \
+--queryXPath="/dataset/*/address/location" \
+--userRole="MANAGER" \
+--outputPath="./data/filtered-output.xml"
 ```
+
+

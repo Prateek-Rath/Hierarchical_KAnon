@@ -5,7 +5,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import org.w3c.dom.*;
 
-public class PrivacyEngine 
+public class TestAge 
 {
     public static void main(String args[])
     {

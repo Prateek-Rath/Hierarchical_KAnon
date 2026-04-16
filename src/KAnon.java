@@ -182,7 +182,8 @@ public class KAnon
         }
     }
 
-    public void traverse()
+    /* K-anonyize the data by doing bfs on the queue */
+    public void k_anonymize()
     {  
         q.add(currentGenLevel);
         int x = 0;
@@ -190,7 +191,7 @@ public class KAnon
             Map<String, Integer> curr = q.poll();
 
             if(check_Kanon(curr)){
-                writeAnonymizedDataset("./data/output.xml", curr);
+                writeAnonymizedDataset("./data/kanon_output.xml", curr);
                 break;
             }
 

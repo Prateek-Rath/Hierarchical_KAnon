@@ -19,7 +19,7 @@ java -cp ".:bin" Anonymize_dataset # run the k-anon thing, if you want to ditch 
 java -cp ".:bin" RunQuery \
 --dataFile="./data/kanon_output.xml" \
 --ruleFile="./config/access_rules.xml" \
---queryXPath="/dataset/*/address/location" \
+--queryXPath="/dataset/*/address" \
 --userRole="MANAGER" \
 --outputPath="./data/filtered-output.xml"
 ```

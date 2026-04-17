@@ -1,22 +1,22 @@
-package custom.AgeHandler;
+package custom.AddressHandler;
 
 import org.w3c.dom.Element;
 
 import interfaces.AttributeHandler;
 import interfaces.LevelManager;
 
-public class AgeHandler extends AttributeHandler 
+public class AddressHandler extends AttributeHandler 
 {
-    public AgeHandler()
+    public AddressHandler()
     {
-        this.maxLevel = 2;
+        this.maxLevel = 5;
     }
 
     public LevelManager getLevelManager(int level)
     {
         try
         {
-            Class<?> clazz = Class.forName("custom.AgeHandler.AgeManager" + level);
+            Class<?> clazz = Class.forName("custom.AddressHandler.AddressManager" + level);
 
             java.lang.reflect.Method method = clazz.getMethod("getInstance");
             Object instance = method.invoke(null);
@@ -35,7 +35,7 @@ public class AgeHandler extends AttributeHandler
     {
         if (level > maxLevel)
         {
-            System.err.println("Cannot generalize age attribute to level " + level);
+            System.err.println("Cannot generalize address attribute to level " + level);
             return null;
         }
 

@@ -18,6 +18,11 @@
             <subtree xpath="./age">
                 <AttributeHandler>custom.AgeHandler.AgeHandler</AttributeHandler>
             </subtree>
+
+            <subtree xpath="./address">
+                <AttributeHandler>custom.AddressHandler.AddressHandler</AttributeHandler>
+            </subtree>
+
             <!-- <subtree xpath="/dataset/person/gender">
                 <AttributeHandler>suppression</AttributeHandler>
             </subtree>

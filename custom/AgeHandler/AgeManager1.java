@@ -39,13 +39,7 @@ public class AgeManager1 implements LevelManager
 
     public Element getGeneralized(Element root)
     {
-        String content = root.getTextContent();
-        int age = Integer.parseInt(content);
-        int lower = (age / 10) * 10;
-        int higher = (age / 10 + 1) * 10 - 1;
-
-        root.setTextContent(lower + "-" + higher);
-
+        generalize(root);
         return root;
     }
 }

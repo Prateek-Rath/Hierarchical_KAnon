@@ -1,6 +1,6 @@
 <privacyPolicy xmlns="http://yourcompany.com/privacy-rules">
 
-    <!-- 🔴 Highest priority: completely block identity info -->
+    <!-- Highest priority: completely block identity info -->
     <rule id="R1" priority="100">
         <path>/dataset/*/aadharNumber</path>
         <action type="refuse"/>
@@ -10,7 +10,7 @@
         </appliesTo>
     </rule>
 
-    <!-- 🔴 Block full identity (names) -->
+    <!-- Block full identity (names) -->
     <rule id="R2" priority="90">
         <path>/dataset/*/firstName</path>
         <action type="mask"/>
@@ -29,7 +29,7 @@
         </appliesTo>
     </rule>
 
-    <!-- 🟠 Sensitive health data -->
+    <!--  Sensitive health data -->
     <rule id="R4" priority="95">
         <path>/dataset/*/disease</path>
         <action type="refuse"/>
@@ -46,7 +46,7 @@
         </appliesTo>
     </rule>
 
-    <!-- 🟡 Quasi-identifiers -->
+    <!-- Quasi-identifiers -->
     <rule id="R6" priority="70">
         <path>/dataset/*/age</path>
         <action type="mask"/>
@@ -63,7 +63,7 @@
         </appliesTo>
     </rule>
 
-    <!-- 🟡 Address generalization -->
+    <!--  Address generalization -->
     <rule id="R8" priority="85">
         <path>/dataset/*/address/house</path>
         <action type="refuse"/>

@@ -46,19 +46,7 @@ public class AgeManager2 implements LevelManager
 
     public Element getGeneralized(Element root)
     {
-        String content = root.getTextContent();
-        String[] splitted = content.split("-");
-        int higher = Integer.parseInt(splitted[1]);
-
-        if (higher <= 19)
-            root.setTextContent("Young");
-
-        else if (higher <= 59)
-            root.setTextContent("Adult");
-
-        else
-            root.setTextContent("Senior");
-
+        generalize(root);
         return root;
     }
 }

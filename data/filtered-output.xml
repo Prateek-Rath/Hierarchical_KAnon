@@ -1,99 +1,99 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <result>
-    <location>
-                                
-        
-        <city>Bangalore</city>
-                                
-        
-        <state>Karnataka</state>
-                                
-        
-        <country>India</country>
-                                
-        
-        <pincode>*****</pincode>
+    <address>
+                    
+            
+        <location>
                             
-      
-    </location>
-    <location>
-                                
-        
-        <city>Bangalore</city>
-                                
-        
-        <state>Karnataka</state>
-                                
-        
-        <country>India</country>
-                                
-        
-        <pincode>*****</pincode>
+            <city>*****</city>
                             
-      
-    </location>
-    <location>
-                                
-        
-        <city>Hyderabad</city>
-                                
-        
-        <state>Telangana</state>
-                                
-        
-        <country>India</country>
-                                
-        
-        <pincode>*****</pincode>
+            <state>Karnataka</state>
                             
-      
-    </location>
-    <location>
-                                
-        
-        <city>Delhi</city>
-                                
-        
-        <state>Delhi</state>
-                                
-        
-        <country>India</country>
-                                
-        
-        <pincode>*****</pincode>
+            <country>India</country>
                             
-      
-    </location>
-    <location>
-                                
-        
-        <city>Kolkata</city>
-                                
-        
-        <state>West Bengal</state>
-                                
-        
-        <country>India</country>
-                                
-        
-        <pincode>*****</pincode>
+            <pincode>*****</pincode>
+                        
+        </location>
+                
+    </address>
+    <address>
+                    
+            
+        <location>
                             
-      
-    </location>
-    <location>
-                                
-        
-        <city>Kolkata</city>
-                                
-        
-        <state>West Bengal</state>
-                                
-        
-        <country>India</country>
-                                
-        
-        <pincode>*****</pincode>
+            <city>*****</city>
                             
-      
-    </location>
+            <state>Karnataka</state>
+                            
+            <country>India</country>
+                            
+            <pincode>*****</pincode>
+                        
+        </location>
+                
+    </address>
+    <address>
+                    
+            
+        <location>
+                            
+            <city>*****</city>
+                            
+            <state>Telangana</state>
+                            
+            <country>India</country>
+                            
+            <pincode>*****</pincode>
+                        
+        </location>
+                
+    </address>
+    <address>
+                    
+            
+        <location>
+                            
+            <city>*****</city>
+                            
+            <state>Delhi</state>
+                            
+            <country>India</country>
+                            
+            <pincode>*****</pincode>
+                        
+        </location>
+                
+    </address>
+    <address>
+                    
+            
+        <location>
+                            
+            <city>*****</city>
+                            
+            <state>West Bengal</state>
+                            
+            <country>India</country>
+                            
+            <pincode>*****</pincode>
+                        
+        </location>
+                
+    </address>
+    <address>
+                    
+            
+        <location>
+                            
+            <city>*****</city>
+                            
+            <state>West Bengal</state>
+                            
+            <country>India</country>
+                            
+            <pincode>*****</pincode>
+                        
+        </location>
+                
+    </address>
 </result>

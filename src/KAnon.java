@@ -186,28 +186,28 @@ public class KAnon
     public void k_anonymize()
     {  
         q.add(currentGenLevel);
-        int x = 0;
+        
         while(!q.isEmpty()){
             Map<String, Integer> curr = q.poll();
 
-            if(check_Kanon(curr)){
+            if(check_Kanon(curr))
+            {
                 writeAnonymizedDataset("./data/kanon_output.xml", curr);
-                break;
+                return;
             }
 
             for(Map.Entry<String, Integer> attr_lvl : curr.entrySet()){
                 Map<String, Integer> nextel = new HashMap<>(curr);
-                //if(attr_lvl.getValue() < maxLevel)
-                // AttributeHandler handler = handlerMap.get(attr_lvl.getKey()); not required as of now
-                
-                if(attr_lvl.getValue() < this.kAnonymity){
-                    System.out.println(attr_lvl.getKey());
+                AttributeHandler attributeHandler = handlerMap.get(attr_lvl.getKey());
+
+                if(attr_lvl.getValue() < attributeHandler.maxLevel){
                     nextel.put(attr_lvl.getKey(), attr_lvl.getValue() + 1);
                     q.add(nextel);
                 }
             }
-            ++x;
         }
+
+        System.err.println("Could not generalize dataset to required K-Anonymity");
     }
 
     public boolean check_Kanon(Map<String, Integer> curr) 
@@ -306,61 +306,61 @@ public class KAnon
 
     /* anonymize the dataset as per the current levels and write it to outputPath */
     public void writeAnonymizedDataset(String outputPath, Map<String, Integer> levels) {
-    try {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        factory.setNamespaceAware(true);
-        DocumentBuilder builder = factory.newDocumentBuilder();
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-        // Create a new empty document
-        Document newDoc = builder.newDocument();
+            // Create a new empty document
+            Document newDoc = builder.newDocument();
 
-        // Root element
-        Element root = newDoc.createElement("dataset");
-        newDoc.appendChild(root);
+            // Root element
+            Element root = newDoc.createElement("dataset");
+            newDoc.appendChild(root);
 
-        for (Element record : dataset) {
-            // Deep copy original record into new document
-            Node importedRecord = newDoc.importNode(record, true);
-            Element newRecord = (Element) importedRecord;
+            for (Element record : dataset) {
+                // Deep copy original record into new document
+                Node importedRecord = newDoc.importNode(record, true);
+                Element newRecord = (Element) importedRecord;
 
-            // Apply generalization for each quasi-identifier
-            for (Map.Entry<String, Integer> entry : levels.entrySet()) {
-                String xpath = entry.getKey();
-                int level = entry.getValue();
+                // Apply generalization for each quasi-identifier
+                for (Map.Entry<String, Integer> entry : levels.entrySet()) {
+                    String xpath = entry.getKey();
+                    int level = entry.getValue();
 
-                AttributeHandler handler = handlerMap.get(xpath);
+                    AttributeHandler handler = handlerMap.get(xpath);
 
-                Element node = findNodeByXPath(newRecord, xpath);
-                if (node == null) continue;
+                    Element node = findNodeByXPath(newRecord, xpath);
+                    if (node == null) continue;
 
-                Element generalizedNode = handler.getGeneralized(node, level);
+                    Element generalizedNode = handler.getGeneralized(node, level);
 
-                // Replace node content (simple approach)
-                if (generalizedNode != null) {
-                    node.setTextContent(generalizedNode.getTextContent());
+                    if (generalizedNode != null) {
+                        Node parent = node.getParentNode();
+                        Node importedGeneralized = newDoc.importNode(generalizedNode, true);
+                        parent.replaceChild(importedGeneralized, node);
+                    }
                 }
+
+                root.appendChild(newRecord);
             }
 
-            root.appendChild(newRecord);
+            // Write to file
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+
+            transformer.setOutputProperty(OutputKeys.INDENT, "no");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+
+            DOMSource source = new DOMSource(newDoc);
+            StreamResult result = new StreamResult(new File(outputPath));
+
+            transformer.transform(source, result);
+
+            System.out.println("Anonymized dataset written to: " + outputPath);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        // Write to file
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-
-        DOMSource source = new DOMSource(newDoc);
-        StreamResult result = new StreamResult(new File(outputPath));
-
-        transformer.transform(source, result);
-
-        System.out.println("Anonymized dataset written to: " + outputPath);
-
-    } catch (Exception e) {
-        e.printStackTrace();
     }
-}
-
 }

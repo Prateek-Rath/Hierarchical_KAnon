@@ -25,6 +25,10 @@ import javax.xml.transform.stream.StreamResult;
 
 public class KAnon 
 {
+    //the entityXPath
+    private String entityXPath;
+    //direct attrs list
+    private List<String> directIdentifiers;
     // Map XPath -> AttributeHandler
     private Map<String, AttributeHandler> handlerMap;
     // represents the current gen lvl as (xpath1 -> genlvl1, xpath2 -> genlvl2, ...)
@@ -33,11 +37,14 @@ public class KAnon
     private Queue<Map<String, Integer>> q;
     // The dataset loaded from the XML file, represented as a list of records (Elements)
     private List<Element> dataset;
+    // The entire original dataset including data other than records
+    private Document originalDoc;
     // k value
     private int kAnonymity;
 
     public KAnon()
     {
+        this.directIdentifiers = new ArrayList<>();
         this.handlerMap = new HashMap<>();
         this.currentGenLevel = new HashMap<>();
         this.dataset = new ArrayList<>();
@@ -53,7 +60,8 @@ public class KAnon
             dbFactory.setNamespaceAware(true); 
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(xmlFile);
-            doc.getDocumentElement().normalize();
+            this.originalDoc = doc;
+            this.originalDoc.getDocumentElement().normalize();
 
             XPath xpathProcessor = XPathFactory.newInstance().newXPath();
             
@@ -108,6 +116,28 @@ public class KAnon
             {
                 System.err.println("No <k_anonymity> tag found");
                 System.exit(1);
+            }
+
+            /* Get all the direct attributes xpaths into a list */
+            NodeList directList = doc.getElementsByTagNameNS(
+                "http://www.xpriv.com/rules", "direct"
+            );
+
+            if (directList.getLength() > 0) {
+                Element directElement = (Element) directList.item(0);
+
+                NodeList subtreeList = directElement.getElementsByTagNameNS(
+                    "http://www.xpriv.com/rules", "subtree"
+                );
+
+                for (int i = 0; i < subtreeList.getLength(); i++) {
+                    Element subtree = (Element) subtreeList.item(i);
+                    String xpath = subtree.getAttribute("xpath");
+
+                    directIdentifiers.add(xpath);
+
+                    System.out.println("Loaded direct identifier: " + xpath);
+                }
             }
             
             /* Get all quasi attributes(nodes here) and load their handlers */ 
@@ -170,6 +200,7 @@ public class KAnon
             if (entityList.getLength() > 0) {
                 Element entityElement = (Element) entityList.item(0);
                 String entityXPath = entityElement.getAttribute("xpath");
+                this.entityXPath = entityXPath;
                 
                 // Now call the loader (assuming your data file is named data.xml)
                 loadDataset(datasetFilePath, entityXPath);
@@ -307,52 +338,59 @@ public class KAnon
     /* anonymize the dataset as per the current levels and write it to outputPath */
     public void writeAnonymizedDataset(String outputPath, Map<String, Integer> levels) {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
+            // Clone original document
+            Document workingDoc = (Document) originalDoc.cloneNode(true);
 
-            // Create a new empty document
-            Document newDoc = builder.newDocument();
+            XPath xpathProcessor = XPathFactory.newInstance().newXPath();
 
-            // Root element
-            Element root = newDoc.createElement("dataset");
-            newDoc.appendChild(root);
+            // Re-fetch records from the cloned document
+            NodeList nodes = (NodeList) xpathProcessor.evaluate(
+                entityXPath,  
+                workingDoc,
+                XPathConstants.NODESET
+            );
 
-            for (Element record : dataset) {
-                // Deep copy original record into new document
-                Node importedRecord = newDoc.importNode(record, true);
-                Element newRecord = (Element) importedRecord;
+            for (int i = 0; i < nodes.getLength(); i++) {
+                if (nodes.item(i).getNodeType() != Node.ELEMENT_NODE) continue;
 
-                // Apply generalization for each quasi-identifier
+                Element record = (Element) nodes.item(i);
+
+                // ---- Apply quasi generalization ----
                 for (Map.Entry<String, Integer> entry : levels.entrySet()) {
                     String xpath = entry.getKey();
                     int level = entry.getValue();
 
                     AttributeHandler handler = handlerMap.get(xpath);
 
-                    Element node = findNodeByXPath(newRecord, xpath);
+                    Element node = findNodeByXPath(record, xpath);
                     if (node == null) continue;
 
                     Element generalizedNode = handler.getGeneralized(node, level);
 
                     if (generalizedNode != null) {
                         Node parent = node.getParentNode();
-                        Node importedGeneralized = newDoc.importNode(generalizedNode, true);
+                        Node importedGeneralized = workingDoc.importNode(generalizedNode, true);
                         parent.replaceChild(importedGeneralized, node);
                     }
                 }
 
-                root.appendChild(newRecord);
+                // ---- Apply direct masking ----
+                for (String xpath : directIdentifiers) {
+                    Element node = findNodeByXPath(record, xpath);
+                    if (node != null) {
+                        node.setTextContent("*****");
+                    }
+                }
             }
 
-            // Write to file
+            // ---- Write full document (preserves everything) ----
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
 
-            transformer.setOutputProperty(OutputKeys.INDENT, "no");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
-            DOMSource source = new DOMSource(newDoc);
+            DOMSource source = new DOMSource(workingDoc);
             StreamResult result = new StreamResult(new File(outputPath));
 
             transformer.transform(source, result);

@@ -180,6 +180,7 @@ public class KAnon
                             handlerMap.put(xpath, handler);
 
                             System.out.println("Loaded: " + className + " for XPath: " + xpath);
+                            System.out.println("max level is " + Integer.toString(handler.maxLevel));
 
                         } else {
                             System.err.println("Class " + className + " does not implement AttributeHandler.");
@@ -220,9 +221,13 @@ public class KAnon
         
         while(!q.isEmpty()){
             Map<String, Integer> curr = q.poll();
-
             if(check_Kanon(curr))
             {
+                System.out.printf("Lattice node that anonymizes is\n");
+                for(Map.Entry<String, Integer> c: curr.entrySet()){
+                    System.out.printf("%d ", c.getValue());
+                }
+                System.out.println("\n");
                 writeAnonymizedDataset("./data/kanon_output.xml", curr);
                 return;
             }
@@ -230,7 +235,6 @@ public class KAnon
             for(Map.Entry<String, Integer> attr_lvl : curr.entrySet()){
                 Map<String, Integer> nextel = new HashMap<>(curr);
                 AttributeHandler attributeHandler = handlerMap.get(attr_lvl.getKey());
-
                 if(attr_lvl.getValue() < attributeHandler.maxLevel){
                     nextel.put(attr_lvl.getKey(), attr_lvl.getValue() + 1);
                     q.add(nextel);

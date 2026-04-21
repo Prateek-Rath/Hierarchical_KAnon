@@ -9,7 +9,7 @@ public class AgeHandler extends AttributeHandler
 {
     public AgeHandler()
     {
-        this.maxLevel = 2;
+        this.maxLevel = 3;
     }
 
     public LevelManager getLevelManager(int level)

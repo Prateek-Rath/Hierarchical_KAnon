@@ -22,6 +22,8 @@ public class Redacter implements LevelManager
     public Element getGeneralized(Element root)
     {
         Element copy = (Element) root.cloneNode(true);
+        generalize(copy);
+        
         return copy;
     }
 }

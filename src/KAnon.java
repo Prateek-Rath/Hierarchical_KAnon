@@ -2,6 +2,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import generalization.Level0Manager;
+import generalization.Redacter;
+import generalization.range_generalization.RangeHandler;
+import generalization.range_generalization.RangeLevelManager;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -86,6 +92,65 @@ public class KAnon
         }
     }
 
+    // Logic for Standard Handlers
+    private void processStandardHandler(String xpath, Element standardElement) 
+    {
+        String NS = "http://www.xpriv.com/rules";
+
+        NodeList rangeGenList = standardElement.getElementsByTagNameNS(NS, "range-generalization");
+        
+        if (rangeGenList.getLength() > 0) 
+        {
+            Element rangeGen = (Element) rangeGenList.item(0);
+            NodeList levels = rangeGen.getElementsByTagNameNS(NS, "level");
+
+            RangeHandler rangeHandler = new RangeHandler(levels.getLength());
+            Level0Manager level0Manager = new Level0Manager();
+
+            rangeHandler.addLevelManager(0, level0Manager);
+            
+            for (int j = 0; j < levels.getLength(); j++) 
+            {
+                Element levelEl = (Element) levels.item(j);
+                int id = Integer.parseInt(levelEl.getAttribute("id"));
+                
+                NodeList redactNodes = levelEl.getElementsByTagNameNS(NS, "redact");
+                
+                if (redactNodes.getLength() > 0) 
+                {
+                    LevelManager redacter = new Redacter();
+                    rangeHandler.addLevelManager(id, redacter);
+                } 
+                
+                else 
+                {
+                    int start = Integer.parseInt(levelEl.getElementsByTagNameNS(NS, "startValue").item(0).getTextContent());
+                    int bucket = Integer.parseInt(levelEl.getElementsByTagNameNS(NS, "bucketSize").item(0).getTextContent());
+                    
+                    LevelManager rangeManager = new RangeLevelManager(bucket, start);
+
+                    rangeHandler.addLevelManager(id, rangeManager);
+                }
+            }
+
+            handlerMap.put(xpath, rangeHandler);
+            System.out.println("Loaded Standard Range Handler for: " + xpath + " with " + levels.getLength() + " levels.");
+        }
+    }
+
+    // Logic for Custom Handlers
+    private void processCustomHandler(String xpath, String className) 
+    {
+        try {
+            Class<?> clazz = Class.forName(className);
+            AttributeHandler handler = (AttributeHandler) clazz.getDeclaredConstructor().newInstance();
+            handlerMap.put(xpath, handler);
+            System.out.println("Loaded Custom: " + className + " for XPath: " + xpath);
+        } catch (Exception e) {
+            System.err.println("Failed to load custom handler: " + className + " - " + e.getMessage());
+        }
+    }
+
     public void load(String ruleFilePath, String datasetFilePath) {        
         try {
             File xmlFile = new File(ruleFilePath);
@@ -156,44 +221,65 @@ public class KAnon
                 "http://www.xpriv.com/rules", "subtree"
             );
 
-            for (int i = 0; i < subtreeList.getLength(); i++) {
+            String NS = "http://www.xpriv.com/rules";
 
-                Node node = subtreeList.item(i);
+            for (int i = 0; i < subtreeList.getLength(); i++) 
+            {
+                Element subtreeElement = (Element) subtreeList.item(i);
+                String xpath = subtreeElement.getAttribute("xpath");
+                currentGenLevel.put(xpath, 0);
 
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                // 1. Try to find StandardAttributeHandler
+                NodeList standardNodes = subtreeElement.getElementsByTagNameNS(NS, "StandardAttributeHandler");
+                if (standardNodes.getLength() > 0) {
+                    processStandardHandler(xpath, (Element) standardNodes.item(0));
+                } 
 
-                    Element subtreeElement = (Element) node;
-                    String xpath = subtreeElement.getAttribute("xpath");
-                    currentGenLevel.put(xpath, 0);
-                    Node attributeHandler = subtreeElement.getElementsByTagNameNS("http://www.xpriv.com/rules", "AttributeHandler").item(0);
-
-                    String className = attributeHandler.getTextContent().trim();
-
-                    try {
-                        Class<?> clazz = Class.forName(className);
-                        Object instance = clazz.getDeclaredConstructor().newInstance();
-
-                        if (instance instanceof AttributeHandler) {
-
-                            AttributeHandler handler = (AttributeHandler) instance;
-
-                            handlerMap.put(xpath, handler);
-
-                            System.out.println("Loaded: " + className + " for XPath: " + xpath);
-                            System.out.println("max level is " + Integer.toString(handler.maxLevel));
-
-                        } else {
-                            System.err.println("Class " + className + " does not implement AttributeHandler.");
-                        }
-
-                    } catch (ClassNotFoundException e) {
-                        System.err.println("Class not found: " + className);
-                    } catch (Exception e) {
-                        System.err.println("Instantiation failed for " + className + ": " + e.getMessage());
-                    }
-                    
+                // 2. Try to find CustomAttributeHandler
+                NodeList customNodes = subtreeElement.getElementsByTagNameNS(NS, "CustomAttributeHandler");
+                if (customNodes.getLength() > 0) {
+                    processCustomHandler(xpath, customNodes.item(0).getTextContent().trim());
                 }
             }
+
+            // for (int i = 0; i < subtreeList.getLength(); i++) {
+
+            //     Node node = subtreeList.item(i);
+
+            //     if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+            //         Element subtreeElement = (Element) node;
+            //         String xpath = subtreeElement.getAttribute("xpath");
+            //         currentGenLevel.put(xpath, 0);
+            //         Node attributeHandler = subtreeElement.getElementsByTagNameNS("http://www.xpriv.com/rules", "AttributeHandler").item(0);
+
+            //         String className = attributeHandler.getTextContent().trim();
+
+            //         try {
+            //             Class<?> clazz = Class.forName(className);
+            //             Object instance = clazz.getDeclaredConstructor().newInstance();
+
+            //             if (instance instanceof AttributeHandler) {
+
+            //                 AttributeHandler handler = (AttributeHandler) instance;
+
+            //                 handlerMap.put(xpath, handler);
+
+            //                 System.out.println("Loaded: " + className + " for XPath: " + xpath);
+            //                 System.out.println("max level is " + Integer.toString(handler.maxLevel));
+
+            //             } else {
+            //                 System.err.println("Class " + className + " does not implement AttributeHandler.");
+            //             }
+
+            //         } catch (ClassNotFoundException e) {
+            //             System.err.println("Class not found: " + className);
+            //         } catch (Exception e) {
+            //             System.err.println("Instantiation failed for " + className + ": " + e.getMessage());
+            //         }
+                    
+            //     }
+            // }
             
             /* Get the entity level i.e. the level at which k-anon is required */
             NodeList entityList = doc.getElementsByTagNameNS("http://www.xpriv.com/rules", "entity_level");

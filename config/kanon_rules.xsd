@@ -27,16 +27,42 @@
                         <xs:element name="range-generalization">
                             <xs:complexType>
                                 <xs:sequence>
-                                    <xs:element name="startValue" type="xs:integer"/>
-                                    <xs:element name="bucketSize" type="xs:integer"/>
+                                <xs:element name="level" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                    <xs:choice>
+                                        <xs:sequence>
+                                            <xs:element name="startValue" type="xs:integer"/>
+                                            <xs:element name="bucketSize" type="xs:integer"/>
+                                        </xs:sequence>
+                                        <xs:element name="redact" type="xs:string" fixed="REDACT"/>
+                                    </xs:choice>
+                                    <xs:attribute name="id" use="required">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:integer">
+                                                <xs:minInclusive value="1" />
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                    </xs:complexType>
+                                </xs:element>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
-
+                        
                         <xs:element name="prefix-generalization">
                             <xs:complexType>
                                 <xs:sequence>
-                                    <xs:element name="prefixLength" type="xs:integer"/>
+                                <xs:element name="level" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                    <xs:choice>
+                                        <xs:sequence>
+                                            <xs:element name="prefixLength" type="xs:integer"/>
+                                        </xs:sequence>
+                                        <xs:element name="redact" type="xs:string" fixed="REDACT"/>
+                                    </xs:choice>
+                                    <xs:attribute name="id" type="xs:string" use="required"/>
+                                    </xs:complexType>
+                                </xs:element>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -44,6 +70,7 @@
                 </xs:complexType>
             </xs:element>
         </xs:choice>
+        <xs:attribute name="xpath" type="xs:string" use="required"/>
     </xs:complexType>   
 
     <xs:complexType name="subtreeListType">

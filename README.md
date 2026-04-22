@@ -15,7 +15,7 @@ javac -d ./bin -sourcepath src:. $(find src custom -name "*.java") src/RunQuery.
 In the root folder, run the command:
 
 ```bash
-java -cp ".:bin" Anonymize_dataset # run the k-anon thing, if you want to ditch it, don't run this.
+java -cp ".:bin" Anonymize_dataset
 java -cp ".:bin" RunQuery \
 --dataFile="./data/kanon_output.xml" \
 --ruleFile="./config/access_rules.xml" \

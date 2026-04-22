@@ -30,7 +30,7 @@
         <firstName>Amit</firstName>
         <lastName>Verma</lastName>
         <gender>Male</gender>
-        <age>23</age>
+        <age>22</age>
         <occupation>Software Engineer</occupation>
         <education>Bachelor</education>
         <maritalStatus>Unmarried</maritalStatus>
@@ -55,7 +55,7 @@
         <firstName>Vikram</firstName>
         <lastName>Singh</lastName>
         <gender>Male</gender>
-        <age>25</age>
+        <age>23</age>
         <occupation>Software Engineer</occupation>
         <education>Bachelor</education>
         <maritalStatus>Unmarried</maritalStatus>
@@ -80,7 +80,7 @@
         <firstName>Suresh</firstName>
         <lastName>Kumar</lastName>
         <gender>Male</gender>
-        <age>27</age>
+        <age>38</age>
         <occupation>Software Engineer</occupation>
         <education>Bachelor</education>
         <maritalStatus>Unmarried</maritalStatus>

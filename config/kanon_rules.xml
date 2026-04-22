@@ -15,13 +15,36 @@
         </direct>
         
         <quasi>
+
+            <!-- STANDARD ATTRIBUTE HANDLERS -->
             <subtree xpath="./age">
-                <CustomAttributeHandler>custom.AgeHandler.AgeHandler</AttributeHandler>
+                <StandardAttributeHandler>
+                    <range-generalization>
+                        <level id="1">                 
+                            <startValue>1</startValue>
+                            <bucketSize>10</bucketSize>
+                        </level>
+
+                        <level id="2">
+                            <startValue>1</startValue>
+                            <bucketSize>20</bucketSize>
+                        </level>
+
+                        <level id="3">
+                            <redact>REDACT</redact>
+                        </level>
+                    </range-generalization>
+                </StandardAttributeHandler>
+            </subtree>
+
+            <!-- CUSTOM ATTRIBUTE HANDLERS -->
+            <!-- <subtree xpath="./age">
+                <CustomAttributeHandler>custom.AgeHandler.AgeHandler</CustomAttributeHandler>
             </subtree>
 
             <subtree xpath="./address">
-                <CustomAttributeHandler>custom.AddressHandler.AddressHandler</AttributeHandler>
-            </subtree>
+                <CustomAttributeHandler>custom.AddressHandler.AddressHandler</CustomAttributeHandler>
+            </subtree> -->
         </quasi>
         
         <sensitive>

@@ -18,6 +18,11 @@ public class RangeHandler extends AttributeHandler
         this.levelManagers = new ArrayList<LevelManager>();
     }
 
+    public void addLevelManager(int level, LevelManager levelManager)
+    {
+        levelManagers.add(level, levelManager);
+    }
+
     public LevelManager getLevelManager(int level)
     {
         if (level >= levelManagers.size())
@@ -31,7 +36,7 @@ public class RangeHandler extends AttributeHandler
 
     public Element getGeneralized(Element root, int level)
     {
-        if (level > maxLevel)
+        if (level > maxLevel || level >= levelManagers.size())
         {
             System.err.println("Cannot generalize attribute to level " + level);
             return null;

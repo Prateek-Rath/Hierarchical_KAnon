@@ -8,12 +8,43 @@
         <xs:attribute name="xpath" type="xs:string" use="required"/>
     </xs:complexType>
 
-    <xs:complexType name="subtreeQuasiType">
+    <!-- <xs:complexType name="subtreeQuasiType">
         <xs:sequence>
             <xs:element name="AttributeHandler" type="xs:string"/>
         </xs:sequence>
         <xs:attribute name="xpath" type="xs:string" use="required"/>
-    </xs:complexType>
+    </xs:complexType> -->
+
+
+
+    <xs:complexType name="subtreeQuasiType">
+        <xs:choice>
+            <xs:element name="CustomAttributeHandler" type="xs:string"/>
+            
+            <xs:element name="StandardAttributeHandler">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="range-generalization">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="startValue" type="xs:integer"/>
+                                    <xs:element name="bucketSize" type="xs:integer"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+
+                        <xs:element name="prefix-generalization">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="prefixLength" type="xs:integer"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>   
 
     <xs:complexType name="subtreeListType">
         <xs:sequence>

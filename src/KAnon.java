@@ -5,6 +5,8 @@ import org.w3c.dom.NodeList;
 
 import generalization.Level0Manager;
 import generalization.Redacter;
+import generalization.prefix_generalization.PrefixHandler;
+import generalization.prefix_generalization.PrefixLevelManager;
 import generalization.range_generalization.RangeHandler;
 import generalization.range_generalization.RangeLevelManager;
 
@@ -135,6 +137,45 @@ public class KAnon
 
             handlerMap.put(xpath, rangeHandler);
             System.out.println("Loaded Standard Range Handler for: " + xpath + " with " + levels.getLength() + " levels.");
+        }
+
+        NodeList prefixGenList = standardElement.getElementsByTagNameNS(NS, "prefix-generalization");
+        
+        if (prefixGenList.getLength() > 0) 
+        {
+            Element prefixGen = (Element) prefixGenList.item(0);
+            NodeList levels = prefixGen.getElementsByTagNameNS(NS, "level");
+
+            PrefixHandler prefixHandler = new PrefixHandler(levels.getLength());
+            Level0Manager level0Manager = new Level0Manager();
+
+            prefixHandler.addLevelManager(0, level0Manager);
+            
+            for (int j = 0; j < levels.getLength(); j++) 
+            {
+                Element levelEl = (Element) levels.item(j);
+                int id = Integer.parseInt(levelEl.getAttribute("id"));
+                
+                NodeList redactNodes = levelEl.getElementsByTagNameNS(NS, "redact");
+                
+                if (redactNodes.getLength() > 0) 
+                {
+                    LevelManager redacter = new Redacter();
+                    prefixHandler.addLevelManager(id, redacter);
+                } 
+                
+                else 
+                {
+                    int prefixLength = Integer.parseInt(levelEl.getElementsByTagNameNS(NS, "prefixLength").item(0).getTextContent());
+
+                    LevelManager prefixManager = new PrefixLevelManager(prefixLength);
+
+                    prefixHandler.addLevelManager(id, prefixManager);
+                }
+            }
+
+            handlerMap.put(xpath, prefixHandler);
+            System.out.println("Loaded Standard Prefix Handler for: " + xpath + " with " + levels.getLength() + " levels.");
         }
     }
 

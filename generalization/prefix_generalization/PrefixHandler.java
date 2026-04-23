@@ -1,4 +1,4 @@
-package generalization.range_generalization;
+package generalization.prefix_generalization;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,11 @@ import org.w3c.dom.Element;
 import interfaces.AttributeHandler;
 import interfaces.LevelManager;
 
-public class RangeHandler extends AttributeHandler
+public class PrefixHandler extends AttributeHandler
 {
     private List<LevelManager> levelManagers;
 
-    public RangeHandler(int maxLevel)
+    public PrefixHandler(int maxLevel)
     {
         this.maxLevel = maxLevel;
         this.levelManagers = new ArrayList<LevelManager>();

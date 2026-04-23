@@ -32,10 +32,4 @@ public class AgeManager0 implements LevelManager
     {
         return;
     }
-
-    public Element getGeneralized(Element root)
-    {
-        Element copy = (Element) root.cloneNode(true);
-        return copy;
-    }
 }

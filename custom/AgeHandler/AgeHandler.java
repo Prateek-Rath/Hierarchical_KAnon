@@ -39,12 +39,12 @@ public class AgeHandler extends AttributeHandler
             return null;
         }
 
-        Element generalized = root;
+        Element generalized = (Element) root.cloneNode(true);
 
         for (int i = 0; i <= level; ++i)
         {
             LevelManager levelManager = getLevelManager(i);
-            generalized = levelManager.getGeneralized(generalized);
+            levelManager.generalize(generalized);
         }
 
         return generalized;

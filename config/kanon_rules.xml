@@ -17,7 +17,7 @@
         <quasi>
 
             <!-- STANDARD ATTRIBUTE HANDLERS -->
-            <subtree xpath="./age">
+            <!-- <subtree xpath="./age">
                 <StandardAttributeHandler>
                     <range-generalization>
                         <level id="1">                 
@@ -35,16 +35,16 @@
                         </level>
                     </range-generalization>
                 </StandardAttributeHandler>
-            </subtree>
+            </subtree> -->
 
             <!-- CUSTOM ATTRIBUTE HANDLERS -->
-            <!-- <subtree xpath="./age">
+            <subtree xpath="./age">
                 <CustomAttributeHandler>custom.AgeHandler.AgeHandler</CustomAttributeHandler>
             </subtree>
 
             <subtree xpath="./address">
                 <CustomAttributeHandler>custom.AddressHandler.AddressHandler</CustomAttributeHandler>
-            </subtree> -->
+            </subtree>
         </quasi>
         
         <sensitive>

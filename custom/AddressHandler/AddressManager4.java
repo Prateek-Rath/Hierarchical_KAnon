@@ -37,10 +37,4 @@ public class AddressManager4 implements LevelManager
         xmlHelper.set(root, "street", "*****");
         xmlHelper.set(root, "pincode", "*****");
     }
-
-    public Element getGeneralized(Element root) 
-    {
-        generalize(root);
-        return root;
-    }
 }

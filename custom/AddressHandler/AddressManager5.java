@@ -38,10 +38,4 @@ public class AddressManager5 implements LevelManager {
         xmlHelper.set(root, "city", "*****");
         xmlHelper.set(root, "pincode", "*****");
     }
-
-    public Element getGeneralized(Element root) 
-    {
-        generalize(root);
-        return root;
-    }
 }

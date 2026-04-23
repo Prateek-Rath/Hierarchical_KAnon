@@ -35,10 +35,4 @@ public class AddressManager1 implements LevelManager
     {
         xmlHelper.set(root, "houseNumber", "*****");
     }
-
-    public Element getGeneralized(Element root) 
-    {
-        generalize(root);
-        return root;
-    }
 }

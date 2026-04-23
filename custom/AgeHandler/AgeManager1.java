@@ -36,10 +36,4 @@ public class AgeManager1 implements LevelManager
 
         root.setTextContent(lower + "-" + higher);
     }
-
-    public Element getGeneralized(Element root)
-    {
-        generalize(root);
-        return root;
-    }
 }

@@ -39,10 +39,4 @@ public class AddressManager2 implements LevelManager
         String pin = xmlHelper.get(root, "pincode");
         xmlHelper.set(root, "pincode", xmlHelper.maskPincode(pin, 2));
     }
-
-    public Element getGeneralized(Element root) 
-    {
-        generalize(root);
-        return root;
-    }
 }

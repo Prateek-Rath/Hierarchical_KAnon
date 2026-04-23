@@ -30,13 +30,6 @@ public class AgeManager3 implements LevelManager
     
     public void generalize(Element root)
     {
-        // String content = root.getTextContent();
         root.setTextContent("*****");
-    }
-
-    public Element getGeneralized(Element root)
-    {
-        generalize(root);
-        return root;
     }
 }

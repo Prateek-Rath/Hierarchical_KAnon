@@ -43,10 +43,4 @@ public class AgeManager2 implements LevelManager
         else
             root.setTextContent("Senior");
     }
-
-    public Element getGeneralized(Element root)
-    {
-        generalize(root);
-        return root;
-    }
 }

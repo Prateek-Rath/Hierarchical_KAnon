@@ -45,7 +45,7 @@ public class RangeHandler extends AttributeHandler
         Element generalized = root;
         
         LevelManager levelManager = getLevelManager(level);
-        generalized = levelManager.getGeneralized(generalized);
+        levelManager.generalize(generalized);
 
         return generalized;
     }

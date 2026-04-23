@@ -29,15 +29,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>101</houseNumber>
                         
-        <street>*****</street>
+        <street>Tech Park Road</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Bangalore</city>
                         
         <state>Karnataka</state>
                         
@@ -79,15 +79,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>102</houseNumber>
                         
-        <street>*****</street>
+        <street>Tech Park Road</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Bangalore</city>
                         
         <state>Karnataka</state>
                         
@@ -129,15 +129,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>103</houseNumber>
                         
-        <street>*****</street>
+        <street>Tech Park Road</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Bangalore</city>
                         
         <state>Karnataka</state>
                         
@@ -179,15 +179,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>104</houseNumber>
                         
-        <street>*****</street>
+        <street>Tech Park Road</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Bangalore</city>
                         
         <state>Karnataka</state>
                         
@@ -229,15 +229,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>105</houseNumber>
                         
-        <street>*****</street>
+        <street>Tech Park Road</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Bangalore</city>
                         
         <state>Karnataka</state>
                         
@@ -279,15 +279,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>201</houseNumber>
                         
-        <street>*****</street>
+        <street>MG Road</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Bangalore</city>
                         
         <state>Karnataka</state>
                         
@@ -329,15 +329,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>202</houseNumber>
                         
-        <street>*****</street>
+        <street>Brigade Road</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Bangalore</city>
                         
         <state>Karnataka</state>
                         
@@ -379,15 +379,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>203</houseNumber>
                         
-        <street>*****</street>
+        <street>Residency Road</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Bangalore</city>
                         
         <state>Karnataka</state>
                         
@@ -429,15 +429,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>204</houseNumber>
                         
-        <street>*****</street>
+        <street>Church Street</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Bangalore</city>
                         
         <state>Karnataka</state>
                         
@@ -479,15 +479,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>301</houseNumber>
                         
-        <street>*****</street>
+        <street>Ring Road</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Mumbai</city>
                         
         <state>Maharashtra</state>
                         
@@ -529,15 +529,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>302</houseNumber>
                         
-        <street>*****</street>
+        <street>Outer Ring</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Mumbai</city>
                         
         <state>Maharashtra</state>
                         
@@ -579,15 +579,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>303</houseNumber>
                         
-        <street>*****</street>
+        <street>Inner Ring</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Mumbai</city>
                         
         <state>Maharashtra</state>
                         
@@ -629,15 +629,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>401</houseNumber>
                         
-        <street>*****</street>
+        <street>North Ave</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Delhi</city>
                         
         <state>Delhi</state>
                         
@@ -679,15 +679,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>402</houseNumber>
                         
-        <street>*****</street>
+        <street>South Ave</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Delhi</city>
                         
         <state>Delhi</state>
                         
@@ -729,15 +729,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>501</houseNumber>
                         
-        <street>*****</street>
+        <street>East St</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Chennai</city>
                         
         <state>Tamil Nadu</state>
                         
@@ -779,15 +779,15 @@
                   
       <house>
                         
-        <houseNumber>*****</houseNumber>
+        <houseNumber>502</houseNumber>
                         
-        <street>*****</street>
+        <street>West St</street>
                     
       </house>
                   
       <location>
                         
-        <city>*****</city>
+        <city>Madurai</city>
                         
         <state>Tamil Nadu</state>
                         

@@ -342,7 +342,7 @@ public class KAnon
     }
 
     /* K-anonyize the data by doing bfs on the queue */
-    public void k_anonymize()
+    public void k_anonymize(String outputPath)
     {  
         q.add(currentGenLevel);
         
@@ -355,7 +355,7 @@ public class KAnon
                     System.out.printf("%d ", c.getValue());
                 }
                 System.out.println("\n");
-                writeAnonymizedDataset("./data/kanon_output.xml", curr);
+                writeAnonymizedDataset(outputPath, curr);
                 return;
             }
 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns="http://www.xpriv.com/rules"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.xpriv.com/rules rules.xsd">
+
+    <k_anonymity>2</k_anonymity>
+    
+    <attribute_mapping>
+        <direct>
+            <subtree xpath="/dataset/person/aadharNumber"/>
+            <subtree xpath="/dataset/person/firstName"/>
+            <subtree xpath="/dataset/person/lastName"/>
+            <!-- <subtree xpath="/dataset/person/address/house/houseNumber"/> -->
+            <!-- <subtree xpath="/dataset/person/address/house/street"/> -->
+        </direct>
+        
+        <quasi>
+
+            <!-- STANDARD ATTRIBUTE HANDLERS -->
+            <subtree xpath="./age">
+                <StandardAttributeHandler>
+                    <range-generalization>
+                        <level id="1">                 
+                            <startValue>1</startValue>
+                            <bucketSize>10</bucketSize>
+                        </level>
+
+                        <level id="2">
+                            <startValue>1</startValue>
+                            <bucketSize>20</bucketSize>
+                        </level>
+
+                        <level id="3">
+                            <redact>REDACT</redact>
+                        </level>
+                    </range-generalization>
+                </StandardAttributeHandler>
+            </subtree>
+
+            <subtree xpath="./address/location/pincode">
+                <StandardAttributeHandler>
+                    <prefix-generalization>
+                        <level id="1">                 
+                            <prefixLength>4</prefixLength>
+                        </level>
+
+                        <level id="2">
+                            <prefixLength>2</prefixLength>
+                        </level>
+
+                        <level id="3">
+                            <redact>REDACT</redact>
+                        </level>
+                    </prefix-generalization>
+                </StandardAttributeHandler>
+            </subtree>
+
+            <!-- CUSTOM ATTRIBUTE HANDLERS -->
+            <!-- <subtree xpath="./age">
+                <CustomAttributeHandler>custom.AgeHandler.AgeHandler</CustomAttributeHandler>
+            </subtree>
+
+            <subtree xpath="./address">
+                <CustomAttributeHandler>custom.AddressHandler.AddressHandler</CustomAttributeHandler>
+            </subtree> -->
+        </quasi>
+        
+        <sensitive>
+            <subtree xpath="/dataset/person/disease"/>
+            <subtree xpath="/dataset/person/incomeBracket"/>
+        </sensitive>
+        
+        <insensitive>
+            <subtree xpath="/dataset/person/bloodGroup"/>
+            <subtree xpath="/dataset/person/address/location/country"/>
+        </insensitive>
+    </attribute_mapping>
+    
+    <entity_level xpath="/dataset/*"></entity_level>
+    
+</rules>

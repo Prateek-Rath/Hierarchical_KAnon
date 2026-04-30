@@ -1,0 +1,124 @@
+<?xml version='1.0'?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.xpriv.com/rules"
+           xmlns="http://www.xpriv.com/rules"
+           elementFormDefault="qualified">
+
+    <xs:complexType name="subtreeType">
+        <xs:attribute name="xpath" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <!-- <xs:complexType name="subtreeQuasiType">
+        <xs:sequence>
+            <xs:element name="AttributeHandler" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="xpath" type="xs:string" use="required"/>
+    </xs:complexType> -->
+
+
+
+    <xs:complexType name="subtreeQuasiType">
+        <xs:choice>
+            <xs:element name="CustomAttributeHandler" type="xs:string"/>
+            
+            <xs:element name="StandardAttributeHandler">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="range-generalization">
+                            <xs:complexType>
+                                <xs:sequence>
+                                <xs:element name="level" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                    <xs:choice>
+                                        <xs:sequence>
+                                            <xs:element name="startValue" type="xs:integer"/>
+                                            <xs:element name="bucketSize" type="xs:integer"/>
+                                        </xs:sequence>
+                                        <xs:element name="redact" type="xs:string" fixed="REDACT"/>
+                                    </xs:choice>
+                                    <xs:attribute name="id" use="required">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:integer">
+                                                <xs:minInclusive value="1" />
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                    </xs:complexType>
+                                </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        
+                        <xs:element name="prefix-generalization">
+                            <xs:complexType>
+                                <xs:sequence>
+                                <xs:element name="level" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                    <xs:choice>
+                                        <xs:sequence>
+                                            <xs:element name="prefixLength" type="xs:integer"/>
+                                        </xs:sequence>
+                                        <xs:element name="redact" type="xs:string" fixed="REDACT"/>
+                                    </xs:choice>
+                                    <xs:attribute name="id" use="required">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:integer">
+                                                <xs:minInclusive value="1" />
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                    </xs:complexType>
+                                </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute name="xpath" type="xs:string" use="required"/>
+    </xs:complexType>   
+
+    <xs:complexType name="subtreeListType">
+        <xs:sequence>
+            <xs:element name="subtree" type="subtreeType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="subtreeListQuasiType">
+        <xs:sequence>
+            <xs:element name="subtree" type="subtreeQuasiType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="rules">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="k_anonymity">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="2" />
+                            <xs:maxInclusive value="15" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="attribute_mapping">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="direct" type="subtreeListType" minOccurs="0"/>
+                            <xs:element name="quasi" type="subtreeListQuasiType" minOccurs="0"/>
+                            <xs:element name="sensitive" type="subtreeListType" minOccurs="0"/>
+                            <xs:element name="insensitive" type="subtreeListType" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="entity_level">
+                    <xs:complexType>
+                        <xs:attribute name="xpath" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

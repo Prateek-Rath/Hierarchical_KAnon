@@ -29,6 +29,14 @@ java -cp "./kanon-core-1.0-SNAPSHOT.jar:target/kanon-plugin-1.0-SNAPSHOT.jar" An
   --data_file_path="src/main/resources/data/dataset.xml" \
   --output_path="src/main/resources/data/kanon_dataset.xml"
 ```
+If we want to use only the target folder then
+```
+java -cp "./kanon-core-1.0-SNAPSHOT.jar:target/kanon-plugin-1.0-SNAPSHOT.jar" Anonymize_dataset \
+  --rules_path="target/classes/config/kanon_rules.xml" \
+  --data_file_path="target/classes/data/dataset.xml" \
+  --output_path="target/classes/data/kanon_dataset.xml"
+```
+
 # Run a query
 From your project's root directory run
 ```
@@ -46,6 +54,16 @@ java -cp "./kanon-core-1.0-SNAPSHOT.jar:target/kanon-plugin-1.0-SNAPSHOT.jar" Ru
   --dataFile="src/main/resources/data/kanon_dataset.xml" \
   --ruleFile="src/main/resources/config/access_rules.xml" \
 --outputPath="src/main/resources/data/query_output.xml" \
+--userRole="MANAGER" \
+--queryXPath="/dataset/*/address"
+```
+
+Once again if we want to use only the target folder then
+```
+java -cp "./kanon-core-1.0-SNAPSHOT.jar:target/kanon-plugin-1.0-SNAPSHOT.jar" RunQuery \
+  --dataFile="target/classes/data/kanon_dataset.xml" \
+  --ruleFile="target/classes/config/access_rules.xml" \ 
+--outputPath="target/classes/data/query_output.xml" \
 --userRole="MANAGER" \
 --queryXPath="/dataset/*/address"
 ```

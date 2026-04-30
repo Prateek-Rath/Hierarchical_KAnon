@@ -1,0 +1,14 @@
+KAnon.class
+Anonymize_dataset.class
+generalization/Redacter.class
+RunQuery.class
+ResolvedState.class
+helpers/XMLHelper.class
+TrieNode.class
+interfaces/AttributeHandler.class
+generalization/prefix_generalization/PrefixHandler.class
+generalization/range_generalization/RangeHandler.class
+generalization/prefix_generalization/PrefixLevelManager.class
+generalization/range_generalization/RangeLevelManager.class
+interfaces/LevelManager.class
+generalization/Level0Manager.class

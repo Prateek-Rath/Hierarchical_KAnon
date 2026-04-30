@@ -45,10 +45,12 @@ public class KAnon
     private Queue<Map<String, Integer>> q;
     // The dataset loaded from the XML file, represented as a list of records (Elements)
     private List<Element> dataset;
-    // The entire original dataset including data other than records
+    // The entire original dataset including data other than entity level records
     private Document originalDoc;
     // k value
     private int kAnonymity;
+    //namespace
+    String NS = "http://www.xpriv.com/rules";
 
     public KAnon()
     {
@@ -97,7 +99,7 @@ public class KAnon
     // Logic for Standard Handlers
     private void processStandardHandler(String xpath, Element standardElement) 
     {
-        String NS = "http://www.xpriv.com/rules";
+        
 
         NodeList rangeGenList = standardElement.getElementsByTagNameNS(NS, "range-generalization");
         
@@ -262,7 +264,7 @@ public class KAnon
                 "http://www.xpriv.com/rules", "subtree"
             );
 
-            String NS = "http://www.xpriv.com/rules";
+            
 
             for (int i = 0; i < subtreeList.getLength(); i++) 
             {
@@ -374,8 +376,6 @@ public class KAnon
 
     public boolean check_Kanon(Map<String, Integer> curr) 
     {
-        // System.out.println("check_Kanon called.");
-
         // List to hold our groups (Equivalence Classes)
         // Each inner list contains records that are indistinguishable
         List<List<Element>> equivalenceClasses = new ArrayList<>();
@@ -383,7 +383,7 @@ public class KAnon
         for (Element record : dataset) {
             boolean foundGroup = false;
 
-            for (java.util.List<Element> group : equivalenceClasses) {
+            for (List<Element> group : equivalenceClasses) {
                 // Compare the current record with the first member of an existing group
                 Element representative = group.get(0);
                 
@@ -396,14 +396,14 @@ public class KAnon
 
             // If no matching group is found, create a new equivalence class
             if (!foundGroup) {
-                java.util.List<Element> newGroup = new java.util.ArrayList<>();
+                List<Element> newGroup = new java.util.ArrayList<>();
                 newGroup.add(record);
                 equivalenceClasses.add(newGroup);
             }
         }
 
         // Check if every equivalence class meets the k-threshold
-        for (java.util.List<Element> group : equivalenceClasses) {
+        for (List<Element> group : equivalenceClasses) {
 
             // System.out.println("Group size = " + group.size());
 
@@ -427,8 +427,8 @@ public class KAnon
             AttributeHandler handler = handlerMap.get(xpath);
             LevelManager manager = handler.getLevelManager(level);
 
-            // We assume your XML structure allows finding the specific node via XPath
-            // For this example, we use a simplified node lookup
+            // The XML structure allows finding the specific node via XPath
+            // We use a simplified node lookup
             Element node1 = findNodeByXPath(r1, xpath);
             Element node2 = findNodeByXPath(r2, xpath);
 
@@ -481,6 +481,7 @@ public class KAnon
                 XPathConstants.NODESET
             );
 
+            //iterate over entities (records)
             for (int i = 0; i < nodes.getLength(); i++) {
                 if (nodes.item(i).getNodeType() != Node.ELEMENT_NODE) continue;
 

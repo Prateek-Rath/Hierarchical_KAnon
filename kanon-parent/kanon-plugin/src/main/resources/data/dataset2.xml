@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dataset>
+    <person id="P001">
+        <aadharNumber>8472-1039-4821</aadharNumber>
+        <firstName>Rahul</firstName>
+        <lastName>Sharma</lastName>
+        <gender>Male</gender>
+        <age>21</age>
+        <occupation>Software Engineer</occupation>
+        <education>Bachelor</education>
+        <maritalStatus>Unmarried</maritalStatus>
+        <incomeBracket>8-12 LPA</incomeBracket>
+        <disease>Diabetes</disease>
+        <bloodGroup>O+</bloodGroup>
+        <address>
+            <house>
+                <houseNumber>101</houseNumber>
+                <street>Tech Park Road</street>
+            </house>
+            <location>
+                <city>Bangalore</city>
+                <state>Karnataka</state>
+                <country>India</country>
+                <pincode>560100</pincode>
+            </location>
+        </address>
+    </person>
+    <person id="P002">
+        <aadharNumber>2938-4756-1029</aadharNumber>
+        <firstName>Amit</firstName>
+        <lastName>Verma</lastName>
+        <gender>Male</gender>
+        <age>33</age>
+        <occupation>Software Engineer</occupation>
+        <education>Bachelor</education>
+        <maritalStatus>Unmarried</maritalStatus>
+        <incomeBracket>8-12 LPA</incomeBracket>
+        <disease>Asthma</disease>
+        <bloodGroup>B+</bloodGroup>
+        <address>
+            <house>
+                <houseNumber>102</houseNumber>
+                <street>Tech Park Road</street>
+            </house>
+            <location>
+                <city>Bangalore</city>
+                <state>Karnataka</state>
+                <country>India</country>
+                <pincode>560100</pincode>
+            </location>
+        </address>
+    </person>
+    <person id="P003">
+        <aadharNumber>5748-2910-3847</aadharNumber>
+        <firstName>Vikram</firstName>
+        <lastName>Singh</lastName>
+        <gender>Male</gender>
+        <age>45</age>
+        <occupation>Software Engineer</occupation>
+        <education>Bachelor</education>
+        <maritalStatus>Unmarried</maritalStatus>
+        <incomeBracket>8-12 LPA</incomeBracket>
+        <disease>Hypertension</disease>
+        <bloodGroup>A-</bloodGroup>
+        <address>
+            <house>
+                <houseNumber>103</houseNumber>
+                <street>Tech Park Road</street>
+            </house>
+            <location>
+                <city>Bangalore</city>
+                <state>Karnataka</state>
+                <country>India</country>
+                <pincode>560100</pincode>
+            </location>
+        </address>
+    </person>
+   
+</dataset>

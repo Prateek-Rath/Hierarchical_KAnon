@@ -59,7 +59,7 @@ public class RunQuery
         // Validate
         if (dataFile == null || ruleFile == null || queryXPath == null || userRole == null) {
             System.out.println("Missing required arguments!");
-            System.out.println("Usage: --dataFile=... --ruleFile=... --queryXPath=... --userRole=...");
+            System.out.println("Usage: --dataFile=... --ruleFile=... --queryXPath=... --userRole=... --outputPath=...");
             return;
         }
 

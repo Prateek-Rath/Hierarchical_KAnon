@@ -62,7 +62,7 @@ Once again if we want to use only the target folder then
 ```
 java -cp "./kanon-core-1.0-SNAPSHOT.jar:target/kanon-plugin-1.0-SNAPSHOT.jar" RunQuery \
   --dataFile="target/classes/data/kanon_dataset.xml" \
-  --ruleFile="target/classes/config/access_rules.xml" \ 
+  --ruleFile="target/classes/config/access_rules.xml" \
 --outputPath="target/classes/data/query_output.xml" \
 --userRole="MANAGER" \
 --queryXPath="/dataset/*/address"
